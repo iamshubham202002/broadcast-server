@@ -1,3 +1,19 @@
+##Screenshots
+
+###[Server Started]
+![Server Started](screenshots/server.png)
+
+### Client Connected
+![Client Connected](screenshots/client.png)
+
+### client1
+![clientDemo](screenshots/client1.png)
+
+### client2
+![clientDemo](screenshots/client2.png)
+
+
+
 \# 🚀 Broadcast Server (Spring Boot + WebSocket)
 
 
