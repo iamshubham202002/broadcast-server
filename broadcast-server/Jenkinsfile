@@ -3,7 +3,7 @@ agent any
 stages{
 stage('build'){
 steps{
- bat 'mvn clean package'
+ bat 'cd broadcast-server && mvn clean package'
 }
 }
 }
