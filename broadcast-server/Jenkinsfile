@@ -1,33 +1,34 @@
-pipeline{
-agent any
-stages{
-stage('build'){
-steps{
- bat 'cd broadcast-server && mvn clean package'
-}
-stage('Test'){
-steps{
- bat 'mvn test'
-}
-}
-stage('Package'){
-steps{
-bat 'mvn package -DskipTests'
-}
+pipeline {
+    agent any
 
-}
-}
-}
-}
-post{
-  always{
-  junit 'target/surefire-report/*.xml'
+    stages {
 
-  }
+        stage('Build') {
+            steps {
+                bat 'cd broadcast-server && mvn clean compile'
+            }
+        }
 
-  success {
-     archiveArtifacts artifacts: 'target/*.jar'
+        stage('Test') {
+            steps {
+                bat 'cd broadcast-server && mvn test'
+            }
+        }
 
-  }
+        stage('Package') {
+            steps {
+                bat 'cd broadcast-server && mvn package -DskipTests'
+            }
+        }
+    }
 
+    post {
+        always {
+            junit 'broadcast-server/target/surefire-reports/*.xml'
+        }
+
+        success {
+            archiveArtifacts artifacts: 'broadcast-server/target/*.jar'
+        }
+    }
 }
