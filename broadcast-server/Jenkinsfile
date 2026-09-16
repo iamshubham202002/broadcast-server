@@ -19,3 +19,15 @@ bat 'mvn package -DskipTests'
 }
 }
 }
+post{
+  always{
+  junit 'target/surefire-report/*.xml'
+
+  }
+
+  success {
+     archiveArtifacts artifacts: 'target/*.jar'
+
+  }
+
+}
