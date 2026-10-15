@@ -1,8 +1,8 @@
+
 pipeline {
     agent any
 
     stages {
-
         stage('Build') {
             steps {
                 bat 'cd broadcast-server && mvn clean compile'
@@ -20,15 +20,25 @@ pipeline {
                 bat 'cd broadcast-server && mvn package -DskipTests'
             }
         }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t broadcast-server:1.0 broadcast-server'
+            }
+        }
     }
 
     post {
         always {
-            junit 'broadcast-server/target/surefire-reports/*.xml'
+            junit(
+                testResults: 'broadcast-server/target/surefire-reports/*.xml',
+                allowEmptyResults: true
+            )
         }
 
         success {
-            archiveArtifacts artifacts: 'broadcast-server/target/*.jar'
+            archiveArtifacts artifacts: 'broadcast-server/target/*.jar',
+                             fingerprint: true
         }
     }
 }
